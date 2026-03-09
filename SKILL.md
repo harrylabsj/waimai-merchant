@@ -1,6 +1,12 @@
 ---
 name: waimai-merchant
 description: 外卖商家管理 Skill - 支持商家注册、商品管理、价格修改和配送时间设置。Use when user mentions merchant registration, product management, price updates, delivery time settings for food delivery business.
+openclaw:
+  permissions:
+    filesystem: true
+    database: true
+  requires:
+    node: ">=18.0.0"
 triggers:
   - "商家注册"
   - "商品上传"
@@ -20,6 +26,25 @@ triggers:
 2. **商品上传** - 添加新商品（名称、描述、图片、价格等）
 3. **价格修改** - 更新商品价格
 4. **配送承诺时间** - 设置/修改每个商品的承诺到货时间
+
+## 🔒 安全说明
+
+### 权限声明
+- **文件系统访问**: 此技能需要读写本地数据库文件，用于存储商家和商品信息
+- **数据库操作**: 使用 SQLite 数据库 (`better-sqlite3`) 进行数据持久化
+- **网络访问**: 无外部网络请求，所有操作在本地完成
+
+### 安全边界
+- ✅ 数据本地存储，不发送到外部服务器
+- ✅ 使用标准 SQLite 数据库，无自定义二进制
+- ✅ 代码开源可审计
+- ❌ 不访问敏感系统文件
+- ❌ 不执行特权操作
+
+### 隐私保护
+- 所有数据存储在 `~/.waimai-merchant/` 目录下
+- 不收集用户身份信息
+- 不记录使用行为数据
 
 ## 安装依赖
 
