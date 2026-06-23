@@ -1,5 +1,6 @@
 ---
 name: waimai-merchant
+version: 1.1.1
 description: 外卖商家管理 Skill - 支持商家注册、商品管理、价格修改和配送时间设置。Use when user mentions merchant registration, product management, price updates, delivery time settings for food delivery business.
 openclaw:
   permissions:
@@ -26,6 +27,39 @@ triggers:
 2. **商品上传** - 添加新商品（名称、描述、图片、价格等）
 3. **价格修改** - 更新商品价格
 4. **配送承诺时间** - 设置/修改每个商品的承诺到货时间
+
+## Operational Upgrade Workflow
+
+Use this skill as an operations console, not a real platform integration. Before changing local merchant or product state, classify the request and show the exact target record.
+
+1. **Classify intent**
+   - Merchant onboarding or review
+   - Menu/product creation
+   - Price change
+   - Delivery promise change
+   - Stock/sold-out action
+   - Suspension, rejection, deletion, or other high-risk admin action
+2. **Preflight check**
+   - Merchant id/status and product id/status
+   - Old value and proposed new value
+   - Reason, effective time, and rollback plan
+   - Whether the change affects active customer-facing listings
+3. **Confirmation rule**
+   - Require explicit confirmation in the current turn for delete, reject, suspend, bulk price updates, delivery-time shortening, and any operation that can hide products or change customer promises.
+   - Show a before/after diff for price, stock, delivery time, and status changes.
+4. **Completion report**
+   - Return the command run, changed ids, previous values, new values, and rollback command when available.
+   - State that data is local SQLite data and is not synchronized to Meituan, Ele.me, or any live delivery platform.
+
+Preferred response shape:
+
+```text
+Intent: <merchant | product | price | delivery | stock | admin>
+Preflight: <target id, current state, requested change>
+Action: <completed | needs confirmation | blocked>
+Result: <changed ids and values>
+Rollback: <command or manual step>
+```
 
 ## 🔒 安全说明
 

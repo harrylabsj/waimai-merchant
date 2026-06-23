@@ -1,6 +1,6 @@
 {
   "name": "waimai-merchant",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "外卖商家管理 Skill - 支持商家注册、商品管理、价格修改和配送时间设置",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -35,7 +35,7 @@
     "skill": true,
     "name": "waimai-merchant",
     "description": "外卖商家管理 Skill - 支持商家注册、商品管理、价格修改和配送时间设置",
-    "version": "1.0.0",
+    "version": "1.1.1",
     "author": "OpenClaw",
     "commands": [
       {
